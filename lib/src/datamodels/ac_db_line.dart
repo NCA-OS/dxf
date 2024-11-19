@@ -1,5 +1,7 @@
 part of dxf;
 
+enum DXF_colors{Black, Red, Yellow, Green, Cyan, Blue, Magenta, Black_again, Grey, Brown, Khaki, Dark_Green, Steel_Blue, Dark_Blue, Purple, Dark_Grey, White, Light_Grey}
+
 /// LINE (DXF)
 ///
 /// Subclass marker (AcDbLine)
@@ -85,6 +87,19 @@ class AcDbLine implements AcDbEntity {
     result.value = value;
   }
 
+
+  DXF_colors _color = DXF_colors.Black;
+  DXF_colors get color => _color;
+  set color(DXF_colors value) {
+    try {
+      final result = _groupCodes.firstWhere((element) => element.code == 62);
+      result.value = value.index;
+    } catch(e) {
+      _groupCodes.add(GroupCode(62, value.index));
+    }
+    _color = value;
+  }
+
   factory AcDbLine._fromGroupCodes(List<GroupCode> codes) {
     var _acDbEntity = AcDbLine._init();
     _acDbEntity._groupCodes.addAll(codes);
@@ -105,6 +120,11 @@ class AcDbLine implements AcDbEntity {
       _acDbEntity._z1 = double.parse(result.value);
       result = codes.firstWhere((element) => element.code == 8);
       _acDbEntity._layerName = result.value;
+
+      try {
+        result = codes.firstWhere((element) => element.code == 62);
+        _acDbEntity._color = DXF_colors.values[int.tryParse(result.value) ?? 0];
+      } catch (e) {};
     } catch (e) {
       throw AssertionError(['Missing group code!']);
     }
