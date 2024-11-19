@@ -38,6 +38,7 @@ class DXF {
 
   /// Get all entities
   List<AcDbEntity> get entities => _entitiesSection.entities;
+  List<AcDbEntity> get blockEntities => _blocksSection.entities;
 
   /// Create a DXF object
   factory DXF.create() {
@@ -107,7 +108,8 @@ class DXF {
       _headerSection._groupCodes.expand((e) => [e._dxfString]).join(),
       _classesSection._groupCodes.expand((e) => [e._dxfString]).join(),
       _tablesSection._groupCodes.expand((e) => [e._dxfString]).join(),
-      _blocksSection._groupCodes.expand((e) => [e._dxfString]).join(),
+      //_blocksSection._groupCodes.expand((e) => [e._dxfString]).join(),
+      _blocksSection._dxfString,
       _entitiesSection._dxfString,
       _objectsSection._groupCodes.expand((e) => [e._dxfString]).join(),
       '  0\r\n',
