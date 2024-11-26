@@ -26,6 +26,21 @@ class DXF {
     _headerSection._increase();
   }
 
+  // /// Add a block reference (INSERT)
+  // void addBlockReference(String blockName, double x, double y, {double scaleX = 1, double scaleY = 1, double rotation = 0}) {
+  //   var insertEntity = AcDbInsert._fromParameters(
+  //     blockName: blockName,
+  //     x: x,
+  //     y: y,
+  //     scaleX: scaleX,
+  //     scaleY: scaleY,
+  //     rotation: rotation,
+  //   );
+  //
+  //   // Add the INSERT entity to the entities section
+  //   _entitiesSection._addEntity(insertEntity);
+  // }
+
   /// Get entity by handle
   AcDbEntity? getEntityByHandle(String handle) {
     return _entitiesSection._getEntityByHandle(handle);
@@ -39,6 +54,12 @@ class DXF {
   /// Get all entities
   List<AcDbEntity> get entities => _entitiesSection.entities;
   List<AcDbEntity> get blockEntities => _blocksSection.entities;
+  List<AcDbTable> get tables => _tablesSection.tables;
+
+  /// Public getter for blocks section
+  BlocksSection get blocksSection => _blocksSection;
+
+
 
   /// Create a DXF object
   factory DXF.create() {
@@ -74,6 +95,8 @@ class DXF {
           } else if (_element.isTABLES) {
             _tablesSection = TablesSection._fromGroupCodes(codes);
           } else if (_element.isBLOCKS) {
+            print("IS BLOCK =======");
+            print("CODES ${codes.last.code}");
             _blocksSection = BlocksSection._fromGroupCodes(codes);
           } else if (_element.isENTITIES) {
             _entitiesSection = EntitiesSection._fromGroupCodes(codes);
@@ -108,7 +131,6 @@ class DXF {
       _headerSection._groupCodes.expand((e) => [e._dxfString]).join(),
       _classesSection._groupCodes.expand((e) => [e._dxfString]).join(),
       _tablesSection._groupCodes.expand((e) => [e._dxfString]).join(),
-      //_blocksSection._groupCodes.expand((e) => [e._dxfString]).join(),
       _blocksSection._dxfString,
       _entitiesSection._dxfString,
       _objectsSection._groupCodes.expand((e) => [e._dxfString]).join(),
@@ -116,7 +138,6 @@ class DXF {
       'EOF\r\n',
     ].join();
   }
-
   /// Starting with DXF version R2007 (AC1021)
   final _dxfSeed = [
     '  0',

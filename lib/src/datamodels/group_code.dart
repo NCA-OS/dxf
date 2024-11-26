@@ -62,6 +62,10 @@ class GroupCode {
     return code == 0 && value.toString() == 'LINE';
   }
 
+  bool get isAcDbOle2Frame {
+    return code == 0 && value.toString() == 'OLE2FRAME';
+  }
+
   bool get isAcDbPolyline {
     return code == 0 && value.toString() == 'LWPOLYLINE';
   }
@@ -78,9 +82,38 @@ class GroupCode {
     return code == 0 && value.toString() == 'TEXT';
   }
 
+  bool get isAcDbTable {
+    return code == 0 && value.toString() == 'TABLE';
+  }
+
+  bool get isAcDbLeader {
+    return code == 0 && value.toString() == 'LEADER';
+  }
+
+  bool get isAcMDbLeader {
+    return code == 0 && value.toString() == 'MULTILEADER';
+  }
+
   bool get isAcDbMText {
     return code == 0 && value.toString() == 'MTEXT';
   }
+  bool get isAcDbAttrib {
+    return code == 0 && value.toString() == 'ATTRIB';
+  }
+
+
+  bool get isAcDbHatch {
+    return code == 0 && value.toString() == 'HATCH';
+  }
+  bool get isAcDbAttdef {
+    return code == 0 && value.toString() == 'ATTDEF';
+  }
+
+
+  bool get isAcDbInsert {
+    return code == 0 && value.toString() == 'INSERT';
+  }
+
 
   bool get isAcDbArc {
     return code == 0 && value.toString() == 'ARC';
